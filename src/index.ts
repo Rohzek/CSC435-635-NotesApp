@@ -1,3 +1,3 @@
-export class index{
+export class index {
 
 }
