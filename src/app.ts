@@ -3,12 +3,12 @@ import {Router, RouterConfiguration} from 'aurelia-router';
 export class App {
   router: Router;
   
-  info;
   message;
 
   constructor() 
   {
     let date = new Date;
+    
     this.message = 'Hello World! ' + date.getFullYear();
   }
 
