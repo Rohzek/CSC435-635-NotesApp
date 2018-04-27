@@ -1,3 +1,40 @@
 <template>
-    <p>This is the categories page.</p>
-</template>
+    <require from="../display.css"></require>
+    <div class='display'>
+      <p>This is the categories page.</p>
+      <button click.delegate = "getData()">GET</button>
+  
+      <!-- This is how to bind an input to a variable -->
+      <table class="table table-striped" aurelia-table="data.bind: users; display-data.bind: $displayData">
+          <thead>
+            <!-- Our Header -->
+          <tr>
+              <th>Id</th>
+              <th>Name</th>
+              <th>Controls</th>
+          </tr>
+          </thead>
+          <tbody>
+            <!-- Our Information -->
+          <tr repeat.for="category of categories">
+              <td>${category.id}</td>
+              <td>${category.title}</td>
+              <td>
+                  <button click.delegate = "deleteData()">DEL</button>
+              </td>
+          </tr>
+  
+          <!-- Our Blank Input -->
+          <tr>
+              <td><input type="text" value.bind="newNote.id" placeholder="${categories.size+1}" value="${categories.size+1}"></td>
+              <td><input type="text" value.bind="newNote.name" placeholder="Name"></td>
+              <td>
+                  <button click.delegate = "postData()">POST</button>
+              </td>
+          </tr>
+          </tbody>
+      </table>
+      <p>*Note: You can enter an Id already displayed to update that record, instead.</p>
+    </div>
+  </template>
+  

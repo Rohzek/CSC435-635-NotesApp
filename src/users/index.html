@@ -1,8 +1,45 @@
 <template>
-  <p>This is the users page.</p>
+  <require from="../display.css"></require>
+  <div class='display'>
+    <p>This is the users page.</p>
+    <button click.delegate = "getData()">GET</button>
 
-  <button click.delegate = "getData()">GET</button>
-  <button click.delegate = "postData()">POST</button>
-  <button click.delegate = "updateData()">PUT</button>
-  <button click.delegate = "deleteData()">DEL</button>
+    <!-- This is how to bind an input to a variable -->
+    <table class="table table-striped" aurelia-table="data.bind: users; display-data.bind: $displayData">
+        <thead>
+          <!-- Our Header -->
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>E-mail</th>
+            <th>Creation Date</th>
+            <th>Controls</th>
+        </tr>
+        </thead>
+        <tbody>
+          <!-- Our Information -->
+        <tr repeat.for="user of users">
+            <td>${user.id}</td>
+            <td>${user.name}</td>
+            <td><a href="mailto:${user.email}">${user.email}</a></td>
+            <td>${user.createdOn}</td>
+            <td>
+                <button click.delegate = "deleteData()">DEL</button>
+            </td>
+        </tr>
+
+        <!-- Our Blank Input -->
+        <tr>
+            <td><input type="text" value.bind="newNote.id" placeholder="${users.size+1}" value="${users.size+1}"></td>
+            <td><input type="text" value.bind="newNote.name" placeholder="Name"></td>
+            <td><input type="email" value.bind="newNote.email" placeholder="john@doe.com"></td>
+            <td>${now}</td>
+            <td>
+                <button click.delegate = "postData()">POST</button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <p>*Note: You can enter an Id already displayed to update that record, instead.</p>
+  </div>
 </template>

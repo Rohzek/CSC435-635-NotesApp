@@ -3,14 +3,7 @@ import {Router, RouterConfiguration} from 'aurelia-router';
 export class App {
   router: Router;
   
-  message;
-
-  constructor() 
-  {
-    let date = new Date;
-    
-    this.message = 'Hello World! ' + date.getFullYear();
-  }
+  constructor() {}
 
   configureRouter(config: RouterConfiguration, router: Router) {
     config.title = 'NotesApp';

@@ -1,0 +1,33 @@
+.navbar{
+  background-color: #000000b2;
+  color: white;
+  text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+}
+
+/* unvisited link */
+a:link {
+  font-family: 'Noto Sans', sans-serif;
+  color: white;
+  text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+}
+
+/* visited link */
+a:visited {
+  font-family: 'Noto Sans', sans-serif;
+  color: whitesmoke;
+  text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+}
+
+/* mouse over link */
+a:hover {
+  font-family: 'Noto Sans', sans-serif;
+  color: hotpink;
+  text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+}
+
+/* selected link */
+a:active {
+  font-family: 'Noto Sans', sans-serif;
+  color: blue;
+  text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+}

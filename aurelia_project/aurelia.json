@@ -105,6 +105,20 @@
             "main": "aurelia-http-client",
             "path": "../node_modules/aurelia-http-client/dist/amd",
             "resources": []
+          },
+          {
+            "name": "aurelia-table",
+            "main": "index",
+            "path": "../node_modules/aurelia-table/dist/amd",
+            "resources": [
+              "aurelia-table.css"
+            ]
+          },
+          {
+            "name": "aurelia-toolbelt",
+            "main": "index",
+            "path": "../node_modules/aurelia-toolbelt/dist/commonjs",
+            "resources": []
           }
         ]
       }

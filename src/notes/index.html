@@ -1,3 +1,44 @@
 <template>
-    <p>This is the notes page.</p>
+  <div class='display'>
+  <require from="../display.css"></require>
+  <p>This is the notes page.</p>
+
+  <!-- This is how to bind buttons to functions -->
+  <button click.delegate = "getData()">GET</button>
+
+  <!--  This is our table-->
+  <table class="table table-striped" aurelia-table="data.bind: users; display-data.bind: $displayData">
+      <thead>
+      <tr>
+          <th>Id</th>
+          <th>Title</th>
+          <th>Text</th>
+          <th>Creation Date</th>
+          <th>Controls:</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr repeat.for="note of notes">
+          <td>${note.id}</td>
+          <td>${note.title}</td>
+          <td>${note.note}</td>
+          <td>${note.createdOn}</td>
+          <td>
+              <button click.delegate = "deleteData()">DEL</button>
+          </td>
+      </tr>
+
+      <tr>
+          <td><input type="text" value.bind="newNote.id" placeholder="${notes.size+1}" value="${notes.size+1}"></td>
+          <td><input type="text" value.bind="newNote.Title" placeholder="Title"></td>
+          <td><input type="text" value.bind="newNote.Note" placeholder="Some Text..."></td>
+          <td>${now}</td>
+          <td>
+              <button click.delegate = "postData()">POST</button>
+          </td>
+      </tr>
+      </tbody>
+  </table>
+  <p>*Note: You can enter an Id already displayed to update that record, instead.</p>
+</div>
 </template>
