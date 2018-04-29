@@ -1,9 +1,15 @@
 <template>
-    <require from="../display.css"></require>
-    <div class='display'>
-      <p>This is the categories page.</p>
-      <button click.delegate = "getData()">GET</button>
+  <div class='display'>
   
+  <!-- Import CSS -->
+  <require from="../display.css"></require>
+  
+  <!-- Import font-->
+  <link href="https://fonts.googleapis.com/css?family=Noto+Sans:700,700i" rel="stylesheet">
+  
+    <!-- Begin page-->
+  <div class="title"><div class="title-text">Categories:</div></div>
+
       <!-- This is how to bind an input to a variable -->
       <table class="table table-striped" aurelia-table="data.bind: users; display-data.bind: $displayData">
           <thead>
@@ -16,25 +22,26 @@
           </thead>
           <tbody>
             <!-- Our Information -->
-          <tr repeat.for="category of categories">
-              <td>${category.id}</td>
-              <td>${category.title}</td>
+          <tr repeat.for="cat of categories">
+              <td>${cat.id}</td>
+              <td>${cat.name}</td>
               <td>
-                  <button click.delegate = "deleteData()">DEL</button>
+                  <button click.delegate = "deleteData(cat.id)">DELETE</button>
               </td>
           </tr>
   
           <!-- Our Blank Input -->
           <tr>
-              <td><input type="text" value.bind="newNote.id" placeholder="${categories.size+1}" value="${categories.size+1}"></td>
-              <td><input type="text" value.bind="newNote.name" placeholder="Name"></td>
+              <td><span><input type="text" value.bind="newNote.id" placeholder="${categories.size+1}" value="${categories.size+1}"></span></td>
+              <td><span><input type="text" value.bind="newNote.name" placeholder="Name"></span></td>
               <td>
-                  <button click.delegate = "postData()">POST</button>
+                  <button click.delegate = "postData()">SUBMIT</button>
               </td>
           </tr>
           </tbody>
       </table>
       <p>*Note: You can enter an Id already displayed to update that record, instead.</p>
+      <p>**Note: Please <button click.delegate = "refreshPage()">Refresh</button> the page to view changes to database.</p>
     </div>
   </template>
   

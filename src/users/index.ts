@@ -1,12 +1,14 @@
 import {autoinject} from 'aurelia-framework';
 import {HttpClient, json} from 'aurelia-fetch-client';
-import {Note} from './../json/note';
+import {User} from './../json/user';
 
 @autoinject
 export class index {
-  users = new Set<Note>();
-  newUser = new Note("", "", "", "");
-  now = new Date().toDateString();
+  users = new Set<User>();
+  newUser = new User("", "", "", "");
+  //now = new Date().toDateString();
+  now = new Date().toLocaleString();
+  index = 1;
 
   constructor(private httpClient: HttpClient) {
     httpClient.configure(config => {
@@ -26,12 +28,14 @@ export class index {
     console.log("GET called");
     this.users.clear();
     this.httpClient.fetch('users', {
-      method: 'get'
+      method: 'GET'
     })
       .then(response => response.json())
       .then(data => {
         for(let entry of data) {
-          this.users.add(new Note(entry.id, entry.title, entry.note, entry.createdOn));
+          var user = new User(entry.id, entry.email, entry.name, entry.createdOn);
+          this.users.add(user);
+          this.index = user.id + 1;
         }
       });
   }
@@ -40,7 +44,7 @@ export class index {
   postData() {
     console.log("POST called");
     this.httpClient.fetch('users', {
-      method: 'post'
+      method: 'POST'
     })
       .then(response => response.json())
       .then(data => {
@@ -49,10 +53,10 @@ export class index {
   }
 
   // Update user
-  updateData() {
+  putData() {
     console.log("PUT called");
     this.httpClient.fetch('users', {
-      method: 'put',
+      method: 'PUT',
       body: json({
         title: 'foo',
         body: 'bar',
@@ -66,14 +70,17 @@ export class index {
   }
 
   // Delete user
-  deleteData() {
-    console.log("DELETE called");
-    this.httpClient.fetch('users', {
-      method: 'delete'
+  deleteData(num) {
+    console.log("DELETE called on User: " + num);
+    this.httpClient.fetch('users/' + num, {
+      method: 'DELETE'
     })
-    .then(response => response.json())
-      .then(data => {
-         console.log(data);
-      });
+    .then(data => {
+        console.log(data);
+     });
+  }
+
+  refreshPage() {
+    window.location.reload();
   }
 }

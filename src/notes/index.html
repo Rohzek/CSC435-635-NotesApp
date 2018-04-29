@@ -1,10 +1,13 @@
 <template>
   <div class='display'>
+    <!-- Import CSS -->
   <require from="../display.css"></require>
-  <p>This is the notes page.</p>
+  
+  <!-- Import font-->
+  <link href="https://fonts.googleapis.com/css?family=Noto+Sans:700,700i" rel="stylesheet">
 
-  <!-- This is how to bind buttons to functions -->
-  <button click.delegate = "getData()">GET</button>
+  <!-- Begin page-->
+  <div class="title"><div class="title-text">Notes:</div></div>
 
   <!--  This is our table-->
   <table class="table table-striped" aurelia-table="data.bind: users; display-data.bind: $displayData">
@@ -13,6 +16,8 @@
           <th>Id</th>
           <th>Title</th>
           <th>Text</th>
+          <th>Category</th>
+          <th>Author</th>
           <th>Creation Date</th>
           <th>Controls:</th>
       </tr>
@@ -22,23 +27,39 @@
           <td>${note.id}</td>
           <td>${note.title}</td>
           <td>${note.note}</td>
-          <td>${note.createdOn}</td>
+          <td>${note.category.name}</td>
+          <td>${note.user.name}</td>
+          <td>${note.createdOn.toLocaleString()}</td>
           <td>
-              <button click.delegate = "deleteData()">DEL</button>
+              <button click.delegate = "deleteData(note.id)">DELETE</button>
           </td>
       </tr>
 
       <tr>
-          <td><input type="text" value.bind="newNote.id" placeholder="${notes.size+1}" value="${notes.size+1}"></td>
-          <td><input type="text" value.bind="newNote.Title" placeholder="Title"></td>
-          <td><input type="text" value.bind="newNote.Note" placeholder="Some Text..."></td>
+          <td><span><input type="text" value.bind="newNote.id" placeholder="${index}" value="${index}"></span></td>
+          <td><span><input type="text" value.bind="newNote.title" placeholder="Title"></span></td>
+          <td><span><input type="text" value.bind="newNote.note" placeholder="Text..."></span></td>
+          <td>
+            <select>
+              <option value="" disabled="disabled" selected="selected">Choose Category...</option>
+              <option repeat.for="cat of cats" value="${cat.id}">${cat.name}</option>
+            </select>
+          </td>
+          <td>
+            <select>
+              <option value="" disabled="disabled" selected="selected">Choose Author...</option>
+              <option repeat.for="user of users" value="${user.id}">${user.name}</option>
+            </select>
+          </td>
           <td>${now}</td>
           <td>
-              <button click.delegate = "postData()">POST</button>
+              <button click.delegate = "postData()">SUBMIT</button>
+              
           </td>
       </tr>
       </tbody>
   </table>
   <p>*Note: You can enter an Id already displayed to update that record, instead.</p>
+  <p>**Note: Please <button click.delegate = "refreshPage()">Refresh</button> the page to view changes to database.</p>
 </div>
 </template>

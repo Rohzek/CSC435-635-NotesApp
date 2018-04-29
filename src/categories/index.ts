@@ -1,11 +1,12 @@
 import {autoinject} from 'aurelia-framework';
 import {HttpClient, json} from 'aurelia-fetch-client';
-import {Note} from './../json/note';
+import {Category} from './../json/category';
 
 @autoinject
-export class index {
-  categories = new Set<Note>();
-  newUser = new Note("", "", "", "");
+export class categoryIndex {
+  categories = new Set<Category>();
+  newUser = new Category("", "");
+  index = 1;
 
   constructor(private httpClient: HttpClient) {
     httpClient.configure(config => {
@@ -30,7 +31,9 @@ export class index {
       .then(response => response.json())
       .then(data => {
         for(let entry of data) {
-          this.categories.add(new Note(entry.id, entry.title, entry.note, entry.createdOn));
+          var cat = new Category(entry.id, entry.name);
+          this.categories.add(cat);
+          this.index = cat.id + 1;
         }
       });
   }
@@ -48,7 +51,7 @@ export class index {
   }
 
   // Update user
-  updateData() {
+  putData() {
     console.log("PUT called");
     this.httpClient.fetch('categories', {
       method: 'put',
@@ -65,14 +68,17 @@ export class index {
   }
 
   // Delete user
-  deleteData() {
-    console.log("DELETE called");
-    this.httpClient.fetch('categories', {
-      method: 'delete'
+  deleteData(num) {
+    console.log("DELETE called on Category: " + num);
+    this.httpClient.fetch('categories/' + num, {
+      method: 'DELETE'
     })
-    .then(response => response.json())
-      .then(data => {
-         console.log(data);
-      });
+    .then(data => {
+      console.log(data);
+    });
+  }
+
+  refreshPage() {
+    window.location.reload();
   }
 }

@@ -3,4 +3,11 @@ body {
   background-repeat: no-repeat;
   background-attachment: fixed;
   background-color: #cccccc;
+  /* Margin bottom by footer height found in: ./footer/infofooter.css */
+  margin-bottom: 30px;
+}
+
+html {
+  position: relative;
+  min-height: 100%;
 }
