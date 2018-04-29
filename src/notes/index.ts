@@ -13,7 +13,13 @@ export class index {
   users = new Array<User>();
   index = 1;
 
-  now = new Date().toLocaleString();
+  selectedId : number = null;
+  selectedTitle : string = null;
+  selectedNote : string = null;
+  selectedCat: number = null;
+  selectedUsr: number = null;
+
+  now = new Date();
   newNote = new Note("", "", "", "", "", "", "", new Category("", ""), new User("", "", "", this.now));
 
   constructor(httpClient: HttpClient) {
@@ -22,7 +28,7 @@ export class index {
         .withBaseUrl('https://notesapiassignment7.azurewebsites.net/api/')
         .withDefaults({
           headers: {
-            'Content-Type': 'application/json',
+            'Content-Type': 'application/json'
           }});
     });
     this.httpClient = httpClient;
@@ -43,7 +49,6 @@ export class index {
     })
       .then(response => response.json())
       .then(data => {
-        console.log(data);
         for(let entry of data) {
           var cat = new Category(entry.id, entry.name);
           var present = false;
@@ -66,7 +71,6 @@ export class index {
     })
       .then(response => response.json())
       .then(data => {
-        console.log(data);
         for(let entry of data) {
           var user = new User(entry.id, entry.email, entry.name, entry.createdOn);
           var present = false;
@@ -102,28 +106,33 @@ export class index {
   }
 
   // Add note
-  postData() {
-    console.log("POST called");
-    this.httpClient.fetch('notes', {
-      method: 'post',
-      body: json({
-      })
-    })
-      .then(response => response.json())
-      .then(data => {
-         console.log(data);
-      });
-  }
-
-  // Update note
   putData() {
-    console.log("PUT called");
-    this.httpClient.fetch('notes', {
-      method: 'put'})
-      .then(response => response.json())
-      .then(data => {
-         console.log(data);
-      });
+    console.log("POST called");
+    if(this.newNote.id == null || this.newNote.title == null || this.newNote.note == null || this.selectedCat == null || this.selectedUsr == null) {
+      alert("Error!: Failed to make a new note, or edit a previous one. Please check all fields, and try again.");
+    }
+    else {
+      this.newNote.category = this.cats[this.selectedCat - 1];
+      this.newNote.user = this.users[this.selectedUsr - 1];
+      this.newNote.createdOn = this.now;
+      this.newNote.categoryid = this.newNote.category.id;
+      this.newNote.isDeleted = false;
+      this.newNote.userid = this.newNote.user.id;
+
+      // If can be POST'ed
+      if(true)
+      {
+        this.httpClient.fetch('notes', {
+          method: 'POST',
+          body: JSON.stringify(this.newNote),
+        })
+        .then(data => {
+          console.log(data);
+       });
+      }
+      else {}
+      
+    }
   }
 
   // Delete note

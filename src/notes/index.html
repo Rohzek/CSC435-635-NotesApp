@@ -40,20 +40,20 @@
           <td><span><input type="text" value.bind="newNote.title" placeholder="Title"></span></td>
           <td><span><input type="text" value.bind="newNote.note" placeholder="Text..."></span></td>
           <td>
-            <select>
-              <option value="" disabled="disabled" selected="selected">Choose Category...</option>
-              <option repeat.for="cat of cats" value="${cat.id}">${cat.name}</option>
+            <select value.bind="selectedCat">
+              <option model.bind="null">Choose Category...</option>
+              <option repeat.for="cat of cats" model.bind="cat.id">${cat.name}</option>
             </select>
           </td>
           <td>
-            <select>
-              <option value="" disabled="disabled" selected="selected">Choose Author...</option>
-              <option repeat.for="user of users" value="${user.id}">${user.name}</option>
-            </select>
+            <select value.bind="selectedUsr">
+                <option model.bind="null">Choose Author...</option>
+                <option repeat.for="usr of users" model.bind="usr.id">${usr.name}</option>
+              </select>
           </td>
-          <td>${now}</td>
+          <td>${now.toLocaleString()}</td>
           <td>
-              <button click.delegate = "postData()">SUBMIT</button>
+              <button click.delegate = "putData()">SUBMIT</button>
               
           </td>
       </tr>
