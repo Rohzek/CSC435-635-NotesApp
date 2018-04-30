@@ -1,7 +1,26 @@
 <template>
+  <!-- Add to global Display -->
   <div class='display'>
+  
+  <!-- File Imports -->
   <require from="./display.css"></require>
-    <h1>Hello there!</h1>
-    <p>This is the home page.</p>
+
+    <!-- Begin Page -->
+    <div class='home'>
+      <div class='home-text'>
+        <br>
+        <h1>Hello there!</h1>
+        <br>
+        <hr>
+        <br>
+        <p>This is the home page for the NotesApp.</p>
+        <p>Visit the <a style='color:hotpink' route-href="route: users"> About</a> link to see detailed information about this project.</p>
+        
+        <p>Visit the <a style='color:hotpink' route-href="route: users"> Users</a>, 
+          <a style='color:hotpink' route-href="route: users"> Categories</a>, or 
+          <a style='color:hotpink' route-href="route: users"> Notes</a> links to poll the information from the database.</p>
+        <br>
+      </div>
+    </div>
   </div>
 </template>

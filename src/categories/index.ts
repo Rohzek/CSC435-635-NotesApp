@@ -4,8 +4,8 @@ import {Category} from './../json/category';
 
 @autoinject
 export class categoryIndex {
-  categories = new Set<Category>();
-  newUser = new Category("", "");
+  categories = new Array<Category>();
+  newCat = new Category("", "");
   index = 1;
 
   constructor(private httpClient: HttpClient) {
@@ -24,47 +24,63 @@ export class categoryIndex {
   // Get user
   async getData() {
     console.log("GET called");
-    this.categories.clear();
+    this.categories = new Array<Category>();
     this.httpClient.fetch('categories', {
-      method: 'get'
+      method: 'GET'
     })
       .then(response => response.json())
       .then(data => {
         for(let entry of data) {
           var cat = new Category(entry.id, entry.name);
-          this.categories.add(cat);
+          this.categories.push(cat);
           this.index = cat.id + 1;
         }
       });
   }
 
   // Add user
-  postData() {
-    console.log("POST called");
-    this.httpClient.fetch('categories', {
-      method: 'post'
-    })
-      .then(response => response.json())
-      .then(data => {
-         console.log(data);
-      });
-  }
+  putCat() {
+    if(this.newCat.id == null || this.newCat.name == null) {
+      alert("Error!: Failed to make a new category, or edit a previous one. Please check all fields, and try again.");
+    }
+    else {
+      let exists = false;
+      
+      for(let cat of this.categories) {
+        if(cat.id == this.newCat.id) {
+          exists = true;
+        }
 
-  // Update user
-  putData() {
-    console.log("PUT called");
-    this.httpClient.fetch('categories', {
-      method: 'put',
-      body: json({
-        title: 'foo',
-        body: 'bar',
-        userId: 1
-      })
-    })
-      .then(response => response.json())
-      .then(data => {
-         console.log(data);
-      });
+        if(exists) {
+          console.log("PUT called");
+          this.httpClient.fetch('categories/' + this.newCat.id, {
+            method: 'PUT',
+            body: JSON.stringify(this.newCat)
+          })
+          .then(data => {
+            console.log(data);
+            if(data.status == 200)
+            {
+              this.getData();
+            }
+          });
+        }
+        else {
+          console.log("POST called");
+          this.httpClient.fetch('categories', {
+            method: 'POST',
+            body: JSON.stringify(this.newCat)
+          })
+          .then(data => {
+            console.log(data);
+            if(data.status == 200)
+            {
+              this.getData();
+            }
+          });
+        }
+      }
+    }
   }
 
   // Delete user
@@ -75,9 +91,14 @@ export class categoryIndex {
     })
     .then(data => {
       console.log(data);
+      if(data.status == 200)
+      {
+        this.getData();
+      }
     });
   }
 
+  // Refresh button (located in infotag)
   refreshPage() {
     window.location.reload();
   }

@@ -1,6 +1,8 @@
+/* main bar */
 .navbar{
   background-color: #000000b2;
   color: white;
+  text-align: center;
   text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
 }
 
@@ -8,6 +10,7 @@
 a:link {
   font-family: 'Noto Sans', sans-serif;
   color: white;
+  text-align: center;
   text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
 }
 
@@ -15,6 +18,7 @@ a:link {
 a:visited {
   font-family: 'Noto Sans', sans-serif;
   color: whitesmoke;
+  text-align: center;
   text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
 }
 
@@ -22,6 +26,7 @@ a:visited {
 a:hover {
   font-family: 'Noto Sans', sans-serif;
   color: hotpink;
+  text-align: center;
   text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
 }
 
@@ -29,5 +34,6 @@ a:hover {
 a:active {
   font-family: 'Noto Sans', sans-serif;
   color: blue;
+  text-align: center;
   text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
 }

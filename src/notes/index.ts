@@ -8,7 +8,7 @@ import {Category} from './../json/category';
 export class index {
   httpClient: HttpClient;
 
-  notes = new Set<Note>();
+  notes = new Array<Note>();
   cats = new Array<Category>();
   users = new Array<User>();
   index = 1;
@@ -28,7 +28,7 @@ export class index {
         .withBaseUrl('https://notesapiassignment7.azurewebsites.net/api/')
         .withDefaults({
           headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
           }});
     });
     this.httpClient = httpClient;
@@ -37,13 +37,15 @@ export class index {
     this.updates();
   }
 
+ // Calls both of the dropdown update methods
   updates() {
     this.updateCats();
     this.updateUsers();
   }
 
+  // Updates category dropdowns with possible options
   updateCats() {
-    this.notes.clear();
+    this.cats = new Array<Category>();
     this.httpClient.fetch('categories', {
       method: 'GET'
     })
@@ -64,8 +66,9 @@ export class index {
           }}});
   }
 
+  // Updates user dropdowns with possible options
   updateUsers() {
-    this.notes.clear();
+    this.users = new Array<User>();
     this.httpClient.fetch('users', {
       method: 'GET'
     })
@@ -86,10 +89,10 @@ export class index {
           }}});
   }
 
-  // Get note
+  // Gets notes
   async getData() {
     console.log("GET called");
-    this.notes.clear();
+    this.notes = new Array<Note>();
     this.httpClient.fetch('notes', {
       method: 'GET'
     })
@@ -99,15 +102,14 @@ export class index {
           var cat = new Category(entry.category.id, entry.category.name);
           var user = new User(entry.user.id, entry.user.email, entry.user.name, entry.user.createdOn);
           var note = new Note(entry.id, entry.title, entry.note, entry.createdOn, entry.categoryid, entry.isDeleted, entry.userid, cat, user);
-          this.notes.add(note);
+          this.notes.push(note);
           this.index = note.id + 1;
         }
       })
   }
 
-  // Add note
-  putData() {
-    console.log("POST called");
+  // Adds a note
+  putNote() {
     if(this.newNote.id == null || this.newNote.title == null || this.newNote.note == null || this.selectedCat == null || this.selectedUsr == null) {
       alert("Error!: Failed to make a new note, or edit a previous one. Please check all fields, and try again.");
     }
@@ -119,23 +121,48 @@ export class index {
       this.newNote.isDeleted = false;
       this.newNote.userid = this.newNote.user.id;
 
-      // If can be POST'ed
-      if(true)
+      let exists = false;
+
+      for(let note of this.notes) {
+        if(note.id == this.newNote.id) {
+          exists = true;
+        }
+      }
+
+      // If Id already exists (and thus we're updating)
+      if(exists)
       {
+        console.log("PUT called");
+        this.httpClient.fetch('notes/' + this.newNote.id, {
+          method: 'PUT',
+          body: JSON.stringify(this.newNote),
+        })
+        .then(data => {
+          console.log(data);
+          {
+            this.getData();
+          }
+       });
+      }
+      else { // POST new
+        console.log("POST called");
         this.httpClient.fetch('notes', {
           method: 'POST',
           body: JSON.stringify(this.newNote),
         })
         .then(data => {
           console.log(data);
+          if(data.status == 200)
+          {
+            this.getData();
+          }
        });
       }
-      else {}
       
     }
   }
 
-  // Delete note
+  // Deletes a note
   deleteData(num) {
     console.log("DELETE called on Note: " + num);
     console.log(this.httpClient.baseUrl + 'notes/' + num);
@@ -144,9 +171,14 @@ export class index {
     })
     .then(data => {
       console.log(data);
+      if(data.status == 200)
+      {
+        this.getData();
+      }
     });
   }
 
+  // Refresh button (located in infotag)
   refreshPage() {
     window.location.reload();
   }

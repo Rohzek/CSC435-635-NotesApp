@@ -1,19 +1,19 @@
 <template>
+  <!-- Adds to global Display -->
   <div class='display'>
   
-  <!-- Import CSS -->
+  <!-- File Imports -->
   <require from="../display.css"></require>
+  <require from="../infotag/info.html"></require>
   
-  <!-- Import font-->
+  <!-- Font Imports -->
   <link href="https://fonts.googleapis.com/css?family=Noto+Sans:700,700i" rel="stylesheet">
   
     <!-- Begin page-->
   <div class="title"><div class="title-text">Categories:</div></div>
-
-      <!-- This is how to bind an input to a variable -->
       <table class="table table-striped" aurelia-table="data.bind: users; display-data.bind: $displayData">
           <thead>
-            <!-- Our Header -->
+            <!-- Our Table's Header -->
           <tr>
               <th>Id</th>
               <th>Name</th>
@@ -32,16 +32,15 @@
   
           <!-- Our Blank Input -->
           <tr>
-              <td><span><input type="text" value.bind="newNote.id" placeholder="${categories.size+1}" value="${categories.size+1}"></span></td>
-              <td><span><input type="text" value.bind="newNote.name" placeholder="Name"></span></td>
+              <td><span><input type="text" value.bind="newCat.id" placeholder="${index}" value="${index}"></span></td>
+              <td><span><input type="text" value.bind="newCat.name" placeholder="Name"></span></td>
               <td>
-                  <button click.delegate = "postData()">SUBMIT</button>
+                  <button click.delegate = "putCat()">SUBMIT</button>
               </td>
           </tr>
           </tbody>
       </table>
-      <p>*Note: You can enter an Id already displayed to update that record, instead.</p>
-      <p>**Note: Please <button click.delegate = "refreshPage()">Refresh</button> the page to view changes to database.</p>
+      <info></info>
     </div>
   </template>
   

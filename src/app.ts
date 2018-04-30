@@ -14,6 +14,8 @@ export class App {
       { route: '/categories',  name: 'categories', moduleId: './categories/index', title: 'Categories'},
       { route: '/notes',  name: 'notes', moduleId: './notes/index', title: 'Notes'}
     ]);
+    
+    config.fallbackRoute('home');
 
     this.router = router;
   }

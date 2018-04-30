@@ -1,7 +1,12 @@
 export class infofooter {
-  tag;
+  creator;
+  symbol;
+  year;
+  
   constructor() {
     let date = new Date();
-    this.tag = "© " + date.getFullYear() + " Tony Rocha";
+    this.creator = "Tony Rocha";
+    this.symbol = "©";
+    this.year = date.getFullYear();
   }
 }
