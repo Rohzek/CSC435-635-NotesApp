@@ -1,1 +1,0 @@
-module.exports = require("npm:bootstrap@4.1.0/dist/js/bootstrap");
