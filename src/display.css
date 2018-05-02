@@ -10,17 +10,29 @@
   border-color: white;
   border-style: double;
   color: white;
+  display: table;
+  overflow-x: auto;
   table-layout: auto;
   text-align: center;
   text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
   width: 100%;
-  white-space: nowrap;
+  white-space: pre-line;
 }
 
 /* rows and heads for above table */
 th, td {
-  border: 1px solid white;
-  width: 10px;
+  border-color: white;
+  border-spacing: 1px;
+  border-style: solid;
+  display: table-cell;
+  font-size: 11pt;
+  text-align: center;
+  vertical-align: middle;
+  width: auto;
+}
+
+tr:hover {
+  background-color: #000000b2;
 }
 
 /* input boxes for above table */
@@ -28,8 +40,11 @@ input[type=text], input[type=email] {
   border-color: white;
   border-style: double;
   box-sizing: border-box;
+  display: table-cell;
   color: red;
   padding: 0px;
+  text-align: center;
+  vertical-align: -19px;
   width: 100%;
 }
 
